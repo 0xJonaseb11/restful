@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from "express";
 import { z } from "zod";
-import { db } from "../utils/db.js";
-import { AppError } from "../middleware/error.js";
+import { db } from "../utils/db";
+import { AppError } from "../middleware/error";
 
 export const createTaskSchema = z.object({
   body: z.object({

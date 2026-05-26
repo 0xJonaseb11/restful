@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { validate } from "../middleware/validate.js";
+import { validate } from "../middleware/validate";
 import {
   createTask,
   createTaskSchema,
@@ -10,7 +10,7 @@ import {
   getTaskSchema,
   updateTask,
   updateTaskSchema,
-} from "../controllers/tasks.js";
+} from "../controllers/tasks";
 
 const router = Router();
 

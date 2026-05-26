@@ -5,11 +5,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
-const tasks_js_1 = __importDefault(require("./routes/tasks.js"));
-const error_js_1 = require("./middleware/error.js");
+const tasks_1 = __importDefault(require("./routes/tasks"));
+const error_1 = require("./middleware/error");
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
-app.use("/api/tasks", tasks_js_1.default);
-app.use(error_js_1.errorHandler);
+app.use("/api/tasks", tasks_1.default);
+app.use(error_1.errorHandler);
 exports.default = app;

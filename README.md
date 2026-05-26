@@ -9,7 +9,8 @@ A highly-optimized, premium full-stack RESTful application template. Built using
 - **End-to-End TypeScript**: Complete type safety from the database schema to the client UI.
 - **RESTful Architecture**: Clean REST endpoints with Express router, controller isolation, and unified error handling.
 - **Robust Schema Validation**: JSON payload, parameters, and query validation using Zod schemas.
-- **Database Engine**: Prisma ORM with lightweight SQLite for rapid development and zero-configuration setups.
+- **Database Engine & GUI**: Prisma ORM with lightweight SQLite, plus built-in Prisma Studio GUI.
+- **API Documentation**: Complete Swagger UI OpenAPI documentation integrated directly into the API runtime.
 - **Premium User Interface**: Stunning, responsive glassmorphic design featuring curated dark-mode hues, real-time dashboard analytics, custom Google Fonts, and micro-animations.
 - **Unified Monorepo Workflow**: Simple orchestration using npm workspaces and concurrent dev servers.
 
@@ -20,7 +21,7 @@ A highly-optimized, premium full-stack RESTful application template. Built using
 ```
 ├── backend/            # Express REST API
 │   ├── prisma/         # Database schema & migrations
-│   └── src/            # Controllers, middleware, routes, services
+│   └── src/            # Controllers, middleware, routes, docs, services
 ├── frontend/           # Vite + React Client
 │   ├── src/            # Components, styling, state management
 │   └── index.html      # Entry document
@@ -49,7 +50,7 @@ npm install
 Initialize your local SQLite database and generate the Prisma Client:
 
 ```bash
-npm run prisma:migrate --workspace=backend
+npm run db:migrate
 ```
 
 ### 3. Launch Development Environment
@@ -61,4 +62,16 @@ npm run dev
 ```
 
 - **Frontend client**: http://localhost:3000
-- **Backend API**: http://localhost:5001 (Proxied automatically via `/api/*`)
+- **Backend API & Swagger Docs**: http://localhost:5001/api/docs
+- **Backend Spec JSON**: http://localhost:5001/api/docs.json
+
+### 4. Database Inspector (GUI)
+
+To visually inspect and manage your SQLite data in the browser, run:
+
+```bash
+npm run studio
+```
+
+- **Prisma Studio**: http://localhost:5555
+

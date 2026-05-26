@@ -4,6 +4,7 @@ exports.deleteTask = exports.updateTask = exports.createTask = exports.getTaskBy
 const zod_1 = require("zod");
 const db_js_1 = require("../utils/db.js");
 const error_js_1 = require("../middleware/error.js");
+
 exports.createTaskSchema = zod_1.z.object({
     body: zod_1.z.object({
         title: zod_1.z.string().min(1, "Title is required"),
@@ -13,6 +14,7 @@ exports.createTaskSchema = zod_1.z.object({
         dueDate: zod_1.z.string().nullable().optional(),
     }),
 });
+
 exports.updateTaskSchema = zod_1.z.object({
     params: zod_1.z.object({
         id: zod_1.z.string().uuid("Invalid task ID format"),
@@ -25,11 +27,13 @@ exports.updateTaskSchema = zod_1.z.object({
         dueDate: zod_1.z.string().nullable().optional(),
     }),
 });
+
 exports.getTaskSchema = zod_1.z.object({
     params: zod_1.z.object({
         id: zod_1.z.string().uuid("Invalid task ID format"),
     }),
 });
+
 exports.getTasksSchema = zod_1.z.object({
     query: zod_1.z.object({
         status: zod_1.z.enum(["todo", "in_progress", "completed", "backlog"]).optional(),
@@ -40,17 +44,13 @@ const getAllTasks = async (req, res, next) => {
     try {
         const { status, priority } = req.query;
         const filter = {};
-        if (status) {
+        if (status)
             filter.status = status;
-        }
-        if (priority) {
+        if (priority)
             filter.priority = priority;
-        }
         const tasks = await db_js_1.db.task.findMany({
             where: filter,
-            orderBy: {
-                createdAt: "desc",
-            },
+            orderBy: { createdAt: "desc" },
         });
         res.status(200).json({
             status: "success",
@@ -62,15 +62,12 @@ const getAllTasks = async (req, res, next) => {
         next(error);
     }
 };
+
 exports.getAllTasks = getAllTasks;
 const getTaskById = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const task = await db_js_1.db.task.findUnique({
-            where: {
-                id,
-            },
-        });
+        const task = await db_js_1.db.task.findUnique({ where: { id } });
         if (!task) {
             throw new error_js_1.AppError(404, "Task not found");
         }
@@ -83,6 +80,7 @@ const getTaskById = async (req, res, next) => {
         next(error);
     }
 };
+
 exports.getTaskById = getTaskById;
 const createTask = async (req, res, next) => {
     try {
@@ -106,39 +104,30 @@ const createTask = async (req, res, next) => {
         next(error);
     }
 };
+
 exports.createTask = createTask;
 const updateTask = async (req, res, next) => {
     try {
         const { id } = req.params;
         const { title, description, status, priority, dueDate } = req.body;
-        const existingTask = await db_js_1.db.task.findUnique({
-            where: {
-                id,
-            },
-        });
+        const existingTask = await db_js_1.db.task.findUnique({ where: { id } });
         if (!existingTask) {
             throw new error_js_1.AppError(404, "Task not found");
         }
         const updatedData = {};
-        if (title !== undefined) {
+        if (title !== undefined)
             updatedData.title = title;
-        }
-        if (description !== undefined) {
+        if (description !== undefined)
             updatedData.description = description;
-        }
-        if (status !== undefined) {
+        if (status !== undefined)
             updatedData.status = status;
-        }
-        if (priority !== undefined) {
+        if (priority !== undefined)
             updatedData.priority = priority;
-        }
         if (dueDate !== undefined) {
             updatedData.dueDate = dueDate ? new Date(dueDate) : null;
         }
         const task = await db_js_1.db.task.update({
-            where: {
-                id,
-            },
+            where: { id },
             data: updatedData,
         });
         res.status(200).json({
@@ -150,27 +139,21 @@ const updateTask = async (req, res, next) => {
         next(error);
     }
 };
+
 exports.updateTask = updateTask;
 const deleteTask = async (req, res, next) => {
     try {
         const { id } = req.params;
-        const existingTask = await db_js_1.db.task.findUnique({
-            where: {
-                id,
-            },
-        });
+        const existingTask = await db_js_1.db.task.findUnique({ where: { id } });
         if (!existingTask) {
             throw new error_js_1.AppError(404, "Task not found");
         }
-        await db_js_1.db.task.delete({
-            where: {
-                id,
-            },
-        });
+        await db_js_1.db.task.delete({ where: { id } });
         res.status(204).send();
     }
     catch (error) {
         next(error);
     }
 };
+
 exports.deleteTask = deleteTask;

@@ -1,6 +1,6 @@
 # TaskFlow &mdash; Full-Stack RESTful Template
 
-A highly-optimized, premium full-stack RESTful application template. Built using **TypeScript**, utilizing an **Express** backend with **Prisma ORM** + **SQLite**, and a **Vite + React** frontend styled with clean, performant **Vanilla CSS**.
+A highly-optimized, premium full-stack RESTful application template. Built using **TypeScript**, utilizing an **Express** backend with **Prisma ORM** + **SQLite**, and a **Vite + React** frontend styled with **Tailwind CSS v3**.
 
 ---
 
